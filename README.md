@@ -1,11 +1,2 @@
-
-# MERN Stack AI Chatbot
-
-This is an AI Chatbot application, inspired by ChatGPT, by using MERN Stack and OpenAI
-
-It's a customized chatbot where each message of the user is stored in DB and can be retrieved and deleted.
-
-It's a completely secure application using JWT Tokens, HTTP-Only Cookies, Signed Cookies, Password Encryption, and Middleware Chains.
-
-Contributions are welcome
-
+# Prabhu-Chatbot
+Developed a fully functional AI chatbot integrated with the OpenAI API for intelligent conversations. Features include user authentication (JWT), real-time messaging, sentiment analysis, and a seamless React frontend with a MongoDB backend for data storage.
