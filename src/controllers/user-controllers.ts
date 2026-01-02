@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import User from "../models/User.js";
-import { compare, hash } from "bcrypt";
+import { compare, hash } from "bcryptjs"; // ✅ Changed from 'bcrypt' to 'bcryptjs'
 import { createToken } from "../utils/token-manager.js";
 import { COOKIE_NAME } from "../utils/constant.js";
 
@@ -24,7 +24,7 @@ export const userSignup = async (req: Request, res: Response) => {
       return res.status(409).json({ message: "User already exists" });
     }
 
-    const hashedPassword = await hash(password, 10);
+    const hashedPassword = await hash(password, 10); // bcryptjs works exactly the same
     const user = await User.create({
       name,
       email,
