@@ -7,8 +7,8 @@ type Chat = {
   content: string;
 };
 
-const OLLAMA_URL = "http://localhost:11434/api/generate";
-const MODEL_NAME = "llama3"; // or "mistral"
+const OLLAMA_URL = process.env.OLLAMA_URL!;
+const MODEL_NAME = process.env.OLLAMA_MODEL!;
 
 export const generateChatCompletion = async (
   req: Request,
