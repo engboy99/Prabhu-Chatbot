@@ -11,7 +11,10 @@ const app = express();
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: [
+      "http://localhost:5173",
+      "https://prabhu-chat-front.vercel.app",
+    ],
     credentials: true,
   })
 );
@@ -19,7 +22,7 @@ app.use(
 app.use(express.json());
 app.use(cookieParser(process.env.COOKIE_SECRET));
 
-app.use(morgan("dev")); // Remove morgan in production
+app.use(morgan("dev"));
 
 app.use("/api/v1", appRouter);
 

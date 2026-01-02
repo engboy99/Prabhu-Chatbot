@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import User from "../models/User.js";
-import { compare, hash } from "bcryptjs"; // ✅ Changed from 'bcrypt' to 'bcryptjs'
+import { compare, hash } from "bcryptjs";
 import { createToken } from "../utils/token-manager.js";
 import { COOKIE_NAME } from "../utils/constant.js";
 
@@ -24,7 +24,7 @@ export const userSignup = async (req: Request, res: Response) => {
       return res.status(409).json({ message: "User already exists" });
     }
 
-    const hashedPassword = await hash(password, 10); // bcryptjs works exactly the same
+    const hashedPassword = await hash(password, 10);
     const user = await User.create({
       name,
       email,
@@ -36,8 +36,8 @@ export const userSignup = async (req: Request, res: Response) => {
     res.cookie(COOKIE_NAME, token, {
       httpOnly: true,
       signed: true,
-      sameSite: "lax",
-      secure: false, // localhost
+      sameSite: "none", // ✅ REQUIRED
+      secure: true,     // ✅ REQUIRED (HTTPS)
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
@@ -70,8 +70,8 @@ export const userLogin = async (req: Request, res: Response) => {
     res.cookie(COOKIE_NAME, token, {
       httpOnly: true,
       signed: true,
-      sameSite: "lax",
-      secure: false,
+      sameSite: "none",
+      secure: true,
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
@@ -103,6 +103,11 @@ export const verifyUser = async (_: Request, res: Response) => {
 
 /* ===================== LOGOUT ===================== */
 export const userLogout = async (_: Request, res: Response) => {
-  res.clearCookie(COOKIE_NAME);
+  res.clearCookie(COOKIE_NAME, {
+    httpOnly: true,
+    sameSite: "none",
+    secure: true,
+  });
+
   return res.status(200).json({ message: "Logged out successfully" });
 };
